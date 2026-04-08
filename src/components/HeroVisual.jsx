@@ -1,120 +1,145 @@
-import { motion as Motion, useReducedMotion } from 'framer-motion'
+import { motion as Motion, useReducedMotion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useEffect } from 'react'
 import { IconResolver } from './IconResolver'
 
-const techCards = [
-  { icon: 'Bot', label: 'Adaptive AI', color: '#7B2FFF', x: -40, y: -60 },
-  { icon: 'CloudCog', label: 'Edge Cloud', color: '#00F0FF', x: 20, y: 10 },
-  { icon: 'ShieldCheck', label: 'Zero-Trust', color: '#FF8A3D', x: -20, y: 80 },
+const serviceNodes = [
+  { icon: 'CloudCog', label: 'Cloud Ops', x: -216, y: -118, z: 40, color: '#00F0FF' },
+  { icon: 'Bot', label: 'AI Agents', x: 220, y: -104, z: 60, color: '#8b5cf6' },
+  { icon: 'ShieldCheck', label: 'Security', x: 220, y: 116, z: 30, color: '#10b981' },
+  { icon: 'Code2', label: 'Engineering', x: -214, y: 122, z: 50, color: '#00F0FF' },
 ]
 
 export default function HeroVisual() {
   const prefersReducedMotion = useReducedMotion()
+  
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  const springConfig = { damping: 25, stiffness: 150 }
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), springConfig)
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig)
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const { innerWidth, innerHeight } = window
+      mouseX.set(e.clientX / innerWidth - 0.5)
+      mouseY.set(e.clientY / innerHeight - 0.5)
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [mouseX, mouseY])
 
   return (
-    <div className="relative flex h-[500px] w-full items-center justify-center lg:h-[600px]">
-      {/* Central Core Glow */}
+    <div className="relative flex h-[460px] w-full items-center justify-center lg:h-[560px] [perspective:1200px]">
       <Motion.div
-        animate={prefersReducedMotion ? {} : { scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute h-64 w-64 rounded-full bg-cyber-cyan/15 blur-[100px]"
-      />
-
-      {/* Central Company Logo */}
-      <Motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5, ease: 'backOut' }}
-        className="absolute z-20 flex h-36 w-36 items-center justify-center rounded-full border border-white/5 bg-cyber-ink/20 p-4 backdrop-blur-sm shadow-glow/20"
+        style={{
+          rotateX: prefersReducedMotion ? 0 : rotateX,
+          rotateY: prefersReducedMotion ? 0 : rotateY,
+          transformStyle: 'preserve-3d',
+        }}
+        className="relative flex h-full w-full items-center justify-center"
       >
-        <img 
-          src="/logo.png" 
-          alt="Cytroksys" 
-          className="h-full w-full object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]"
-          style={{ animation: 'float 6s ease-in-out infinite' }}
+        {/* Background Moving Glows */}
+        <Motion.div
+          animate={prefersReducedMotion ? {} : { x: [-20, 20, -20], y: [10, -10, 10], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute h-80 w-80 rounded-full bg-cyber-cyan/30 blur-[100px] [transform:translateZ(-100px)]"
         />
-      </Motion.div>
+        <Motion.div
+          animate={prefersReducedMotion ? {} : { x: [20, -20, 20], y: [-10, 10, -10], opacity: [0.25, 0.45, 0.25] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute h-96 w-96 rounded-full bg-cyber-violet/30 blur-[120px] [transform:translateZ(-150px)]"
+        />
 
-      {/* Floating Orbital Path */}
-      <svg className="absolute h-full w-full opacity-20" viewBox="0 0 400 400">
-        <defs>
-          <linearGradient id="orbit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--color-cyan)" />
-            <stop offset="100%" stopColor="var(--color-violet)" />
-          </linearGradient>
-        </defs>
-        <Motion.circle
-          cx="200"
-          cy="200"
-          r="160"
-          stroke="url(#orbit-grad)"
-          strokeWidth="1"
-          fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 3, ease: 'easeInOut' }}
-        />
-        <Motion.circle
-          cx="200"
-          cy="200"
-          r="140"
-          stroke="rgba(255,255,255,0.08)"
-          strokeWidth="0.5"
-          fill="none"
-          strokeDasharray="10 15"
-          animate={prefersReducedMotion ? {} : { rotate: 360 }}
-          transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-        />
-      </svg>
-
-      {/* Interactive Tech Cards */}
-      <div className="relative z-10 grid gap-6">
-        {techCards.map((card, i) => (
-          <Motion.div
-            key={card.label}
-            initial={{ opacity: 0, x: card.x + 40, y: card.y }}
-            animate={{ opacity: 1, x: card.x, y: card.y }}
-            whileHover={{ scale: 1.05, x: card.x * 1.1, y: card.y * 1.1 }}
-            transition={{
-              type: 'spring',
-              stiffness: 120,
-              damping: 20,
-              delay: 0.4 + i * 0.15,
+        {/* Central Company Logo with 3D shadow */}
+        <Motion.div
+          initial={{ scale: 0, opacity: 0, translateZ: 0 }}
+          animate={{ scale: 1, opacity: 1, translateZ: 50 }}
+          transition={{ duration: 1.2, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+          className="absolute z-20 flex h-64 w-64 items-center justify-center rounded-full border border-cyber-cyan/30 bg-cyber-ink/10 p-6 backdrop-blur-md shadow-[0_32px_64px_rgba(0,0,0,0.5)] md:h-80 md:w-80"
+          style={{ transformStyle: 'preserve-3d' }}
+        >
+          <img 
+            src="/logo.png" 
+            alt="Cytroksys" 
+            className="h-full w-full rounded-full object-contain drop-shadow-[0_0_30px_rgba(0,240,255,0.4)]"
+            style={{ 
+              animation: prefersReducedMotion ? 'none' : 'float 6s ease-in-out infinite',
+              transform: 'translateZ(30px)'
             }}
-            className="group absolute"
-            style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
-          >
-            <div className="glass-card flex min-w-[180px] items-center gap-3 border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl">
-              <div
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyber-panel-soft shadow-inner"
-                style={{ color: card.color }}
-              >
-                <IconResolver name={card.icon} className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-display text-xs font-bold uppercase tracking-wider text-white">
-                  {card.label}
-                </p>
-                <div className="mt-1 flex h-1 w-12 overflow-hidden rounded-full bg-white/5">
-                  <Motion.div
-                    animate={prefersReducedMotion ? {} : { x: ['-100%', '100%'] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                    className="h-full w-full bg-gradient-to-r from-transparent via-cyber-cyan to-transparent"
-                  />
-                </div>
-              </div>
-              <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-white/10 to-transparent opacity-0 transition group-hover:opacity-100" />
-            </div>
-          </Motion.div>
-        ))}
-      </div>
+          />
+        </Motion.div>
 
-      {/* Decorative Bits */}
-      <Motion.div
-        animate={prefersReducedMotion ? {} : { rotate: -360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-        className="absolute inset-0 opacity-10"
-      >
-        <div className="h-full w-full bg-cyber-grid [mask-image:radial-gradient(circle,black,transparent_70%)]" />
+        {/* Floating Nodes with specific Z-depth */}
+        <div className="absolute z-30" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)', transformStyle: 'preserve-3d' }}>
+          {serviceNodes.map((node, index) => (
+            <Motion.div
+              key={node.label}
+              initial={{ opacity: 0, x: node.x * 0.5, y: node.y * 0.5, translateZ: 0 }}
+              animate={
+                prefersReducedMotion
+                  ? { opacity: 1, x: node.x, y: node.y, translateZ: node.z }
+                  : {
+                      opacity: 1,
+                      x: [node.x, node.x + 8, node.x - 4, node.x],
+                      y: [node.y, node.y - 10, node.y + 6, node.y],
+                      translateZ: node.z
+                    }
+              }
+              transition={{
+                duration: 5 + index,
+                repeat: prefersReducedMotion ? 0 : Infinity,
+                ease: 'easeInOut',
+                delay: 0.3 + index * 0.15,
+              }}
+              className="absolute"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="glass-card flex items-center gap-3 rounded-2xl px-4 py-2.5 shadow-2xl">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-cyber-ink/80 shadow-inner" style={{ color: node.color }}>
+                  <IconResolver name={node.icon} className="h-5 w-5" />
+                </span>
+                <span className="font-display text-[12px] font-bold uppercase tracking-wider text-cyber-text">{node.label}</span>
+              </div>
+            </Motion.div>
+          ))}
+        </div>
+
+        {/* Orbital SVG with 3D Tilt */}
+        <svg className="absolute h-[600px] w-[600px] opacity-20 [transform:translateZ(-50px)rotateX(10deg)]" viewBox="0 0 400 400">
+          <defs>
+            <linearGradient id="orbit-grad-3d" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-cyan)" />
+              <stop offset="100%" stopColor="var(--color-violet)" />
+            </linearGradient>
+          </defs>
+          <Motion.circle
+            cx="200"
+            cy="200"
+            r="180"
+            stroke="url(#orbit-grad-3d)"
+            strokeWidth="1.5"
+            fill="none"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 4, ease: 'easeInOut' }}
+          />
+          <circle
+            cx="200"
+            cy="200"
+            r="150"
+            stroke="rgba(255,255,255,0.1)"
+            strokeWidth="0.5"
+            fill="none"
+            strokeDasharray="8 12"
+          />
+        </svg>
+
+        {/* Cyber Grid with depth */}
+        <div className="absolute inset-0 -z-10 [transform:translateZ(-200px)scale(1.5)] opacity-20">
+          <div className="cyber-grid-overlay h-full w-full" />
+        </div>
       </Motion.div>
     </div>
   )

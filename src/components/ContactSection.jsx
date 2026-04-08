@@ -1,12 +1,20 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { motion as Motion } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import { contactDetails } from '../data/company'
 import { IconResolver } from './IconResolver'
 import SectionHeading from './SectionHeading'
 
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+const canUseEmailJs =
+  Boolean(EMAILJS_SERVICE_ID) && Boolean(EMAILJS_TEMPLATE_ID) && Boolean(EMAILJS_PUBLIC_KEY)
+
 export default function ContactSection() {
-  const [submitted, setSubmitted] = useState(false)
+  const [submitFeedback, setSubmitFeedback] = useState(null)
   const {
     register,
     handleSubmit,
@@ -15,16 +23,59 @@ export default function ContactSection() {
   } = useForm({ mode: 'onTouched' })
 
   const onSubmit = async (values) => {
-    console.info('Inquiry submitted', values)
-    await new Promise((resolve) => {
-      setTimeout(resolve, 500)
-    })
-    setSubmitted(true)
+    setSubmitFeedback(null)
+
+    const openMailDraft = () => {
+      const subject = encodeURIComponent(`New Website Query - ${values.service}`)
+      const body = encodeURIComponent(
+        `Name: ${values.name}\nEmail: ${values.email}\nService: ${values.service}\n\nMessage:\n${values.message}`
+      )
+
+      window.location.href = `mailto:${contactDetails.email}?subject=${subject}&body=${body}`
+    }
+
+    try {
+      if (canUseEmailJs) {
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            from_name: values.name,
+            reply_to: values.email,
+            service_needed: values.service,
+            message: values.message,
+            to_email: contactDetails.email,
+          },
+          {
+            publicKey: EMAILJS_PUBLIC_KEY,
+          }
+        )
+
+        setSubmitFeedback({
+          type: 'success',
+          message: 'Query sent successfully. Our team will contact you shortly.',
+        })
+      } else {
+        openMailDraft()
+        setSubmitFeedback({
+          type: 'warning',
+          message: 'Email app opened. Send the draft to submit your query.',
+        })
+      }
+    } catch (error) {
+      console.error('Email send failed. Falling back to mail app.', error)
+      openMailDraft()
+      setSubmitFeedback({
+        type: 'warning',
+        message: 'Auto-send failed, so your email app was opened instead.',
+      })
+    }
+
     reset()
   }
 
   return (
-    <section id="contact" className="mx-auto w-full max-w-7xl px-4 py-20 md:px-6" aria-labelledby="contact-title">
+    <section id="contact" className="theme-sheen-violet mx-auto w-full max-w-7xl px-4 py-20 md:px-6" aria-labelledby="contact-title">
       <div className="grid gap-8 md:grid-cols-[1fr_1.15fr]">
         <div>
           <SectionHeading
@@ -34,8 +85,13 @@ export default function ContactSection() {
           />
 
           <div className="mt-8 space-y-4">
-            <Detail icon="Mail" label="Email" value={contactDetails.email} />
-            <Detail icon="Phone" label="Call" value={contactDetails.phone} />
+            <Detail icon="Mail" label="Email" value={contactDetails.email} href={`mailto:${contactDetails.email}`} />
+            <Detail
+              icon="Phone"
+              label="Call"
+              value={contactDetails.phone}
+              href={`tel:${contactDetails.phone.replace(/\s+/g, '')}`}
+            />
             <Detail icon="MapPin" label="Location" value={contactDetails.location} />
           </div>
         </div>
@@ -46,7 +102,7 @@ export default function ContactSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.45 }}
           onSubmit={handleSubmit(onSubmit)}
-          className="rounded-3xl border border-cyber-line bg-cyber-panel p-6 md:p-8"
+          className="glass-card contact-form-card rounded-3xl border border-cyber-line bg-cyber-panel p-6 md:p-8"
           noValidate
           aria-label="Contact Cytroksys"
         >
@@ -116,14 +172,17 @@ export default function ContactSection() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-violet px-5 py-3 text-sm font-semibold text-cyber-ink transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+            className="contact-submit-btn mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {isSubmitting ? 'Sending...' : 'Send Inquiry'}
+            {isSubmitting ? 'Sending...' : 'Send Query'}
           </button>
 
-          {submitted ? (
-            <p className="mt-4 text-sm text-emerald-300" role="status">
-              Your request has been captured. Our team will reach out shortly.
+          {submitFeedback ? (
+            <p
+              className={`mt-4 text-sm ${submitFeedback.type === 'success' ? 'text-emerald-400' : 'text-amber-400'}`}
+              role="status"
+            >
+              {submitFeedback.message}
             </p>
           ) : null}
         </Motion.form>
@@ -132,15 +191,21 @@ export default function ContactSection() {
   )
 }
 
-function Detail({ icon, label, value }) {
+function Detail({ icon, label, value, href }) {
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-cyber-line bg-cyber-panel p-4">
+    <div className="glass-card flex items-start gap-3 rounded-xl border border-cyber-line bg-cyber-panel p-4">
       <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-cyber-ink text-cyber-cyan">
         <IconResolver name={icon} className="h-4 w-4" />
       </span>
       <span>
         <p className="text-xs uppercase tracking-[0.14em] text-cyber-muted">{label}</p>
-        <p className="mt-1 text-sm text-cyber-text">{value}</p>
+        {href ? (
+          <a href={href} className="mt-1 inline-block text-sm text-cyber-text transition hover:text-cyber-cyan">
+            {value}
+          </a>
+        ) : (
+          <p className="mt-1 text-sm text-cyber-text">{value}</p>
+        )}
       </span>
     </div>
   )

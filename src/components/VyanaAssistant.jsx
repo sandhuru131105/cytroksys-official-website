@@ -124,7 +124,7 @@ export default function VyanaAssistant() {
                   src={VYANA_LOGO}
                   alt="Vyana logo"
                   onError={useFallbackLogo}
-                  className="h-8 w-8 rounded-full border border-cyber-line/80 object-cover shadow-glow"
+                  className="h-8 w-8 rounded-full border border-cyber-line/80 object-cover shadow-glow accent-ring-pulse"
                 />
                 <div>
                   <p className="font-display text-sm tracking-wide text-cyber-text">Vyana AI Assistant</p>
@@ -148,7 +148,7 @@ export default function VyanaAssistant() {
                     key={prompt}
                     type="button"
                     onClick={() => sendQuickPrompt(prompt)}
-                    className="rounded-full border border-cyber-line bg-cyber-ink/60 px-2.5 py-1 text-[11px] tracking-wide text-cyber-muted transition hover:border-cyber-cyan/60 hover:text-cyber-text"
+                      className="surface-panel rounded-full border border-cyber-line bg-cyber-ink/60 px-2.5 py-1 text-[11px] tracking-wide text-cyber-muted transition hover:border-cyber-cyan/60 hover:text-cyber-text"
                   >
                     {prompt}
                   </button>
@@ -163,7 +163,7 @@ export default function VyanaAssistant() {
                   className={`max-w-[92%] rounded-xl px-3 py-2 text-sm leading-relaxed ${
                     message.from === 'assistant'
                       ? 'mr-auto border border-cyber-line bg-cyber-ink/70 text-cyber-muted'
-                      : 'ml-auto bg-gradient-to-r from-cyber-cyan to-cyber-violet text-cyber-ink'
+                      : 'brand-cta ml-auto text-cyber-ink'
                   }`}
                 >
                   {message.text}
@@ -190,7 +190,7 @@ export default function VyanaAssistant() {
                 />
                 <button
                   type="submit"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-cyber-cyan to-cyber-violet text-cyber-ink transition hover:brightness-110"
+                  className="brand-cta premium-shimmer inline-flex h-10 w-10 items-center justify-center rounded-xl text-cyber-ink transition"
                   aria-label="Send message"
                 >
                   <IconResolver name="Send" className="h-4 w-4" />

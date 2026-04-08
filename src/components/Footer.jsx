@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
-import { companyProfile, contactDetails, navItems, socialLinks } from '../data/company'
+import { contactDetails, navItems, socialLinks } from '../data/company'
 import { IconResolver } from './IconResolver'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-cyber-line bg-cyber-panel/80">
+    <footer className="theme-sheen-aurora border-t border-cyber-line bg-cyber-panel/80">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:px-6">
         <div>
           <Link to="/" className="inline-flex items-center gap-3 mb-6">
-            <img src="/logo.png" alt="Cytroksys Logo" className="h-10 w-10 rounded-full" />
+             <img src="/logo.png" alt="Cytroksys Logo" className="h-10 w-10 rounded-full shadow-glow" />
             <span className="font-display text-xl tracking-tight text-cyber-text">Cytroksys</span>
           </Link>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-cyber-muted">
@@ -44,7 +44,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`Open ${link.label}`}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line bg-cyber-ink text-cyber-muted transition hover:border-cyber-cyan hover:text-cyber-cyan"
+                   className="surface-panel inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line bg-cyber-ink text-cyber-muted transition hover:border-cyber-cyan hover:text-cyber-cyan"
                 >
                   <IconResolver name={link.icon} className="h-4 w-4" />
                 </a>
@@ -56,7 +56,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-cyber-line/80 px-4 py-4 text-center text-xs text-cyber-muted md:px-6">
-        © 2025 Cytroksys Infotech. All rights reserved.
+        © 2026 Cytroksys Infotech. All rights reserved.
       </div>
     </footer>
   )

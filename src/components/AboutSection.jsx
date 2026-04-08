@@ -1,10 +1,11 @@
 import { motion as Motion } from 'framer-motion'
 import { companyProfile, founder } from '../data/company'
+import { IconResolver } from './IconResolver'
 import SectionHeading from './SectionHeading'
 
 export default function AboutSection() {
   return (
-    <section id="about" className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-20 md:grid-cols-[1.2fr_1fr] md:px-6" aria-labelledby="about-title">
+    <section id="about" className="theme-sheen-cyan mx-auto grid w-full max-w-7xl gap-10 px-4 py-20 md:grid-cols-[1.2fr_1fr] md:px-6" aria-labelledby="about-title">
       <div>
         <SectionHeading
           eyebrow="About Us"
@@ -29,18 +30,44 @@ export default function AboutSection() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.5 }}
-        className="glass-card rounded-3xl border border-cyber-line p-7"
+        className="glass-card premium-shimmer rounded-3xl border border-cyber-line p-7"
       >
-        <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full border border-cyber-cyan/60 bg-gradient-to-br from-cyber-cyan/30 to-cyber-violet/40 font-display text-lg text-cyber-text">
-            SP
+        <div className="flex items-center gap-5">
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-cyber-cyan/40 bg-gradient-to-br from-cyber-cyan/20 to-cyber-violet/20 p-1 shadow-glow/30 overflow-hidden">
+            {/* Inner Decorative Circle */}
+            <div className="absolute inset-1.5 animate-[spin_10s_linear_infinite] rounded-full border border-dashed border-cyber-cyan/40 z-20 pointer-events-none" />
+            {founder.photo ? (
+              <img 
+                src={founder.photo} 
+                alt={founder.name} 
+                className="h-full w-full rounded-full object-cover z-10"
+              />
+            ) : (
+              <div className="z-10 flex h-full w-full items-center justify-center rounded-full bg-cyber-ink/40 font-display text-xl font-bold text-cyber-text backdrop-blur-sm">
+                {founder.name.split(' ').map(n => n[0]).join('')}
+              </div>
+            )}
           </div>
           <div>
-            <p className="font-display text-xl text-cyber-text">{founder.name}</p>
-            <p className="text-sm text-cyber-cyan">{founder.role}</p>
+            <h3 className="font-display text-2xl font-bold tracking-tight text-cyber-text">{founder.name}</h3>
+            <p className="text-sm font-semibold uppercase tracking-wider text-cyber-cyan/90">{founder.role}</p>
           </div>
         </div>
-        <p className="mt-6 text-sm leading-relaxed text-cyber-muted">{founder.bio}</p>
+        <p className="mt-6 text-base leading-relaxed text-cyber-muted/90">{founder.bio}</p>
+        
+        <div className="mt-8 pt-6 border-t border-cyber-line/50">
+          <a 
+            href={companyProfile.website} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2.5 text-sm font-bold tracking-wide text-cyber-text transition hover:text-cyber-cyan"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyber-cyan/10 text-cyber-cyan transition group-hover:bg-cyber-cyan group-hover:text-cyber-ink">
+              <IconResolver name="ExternalLink" className="h-4 w-4" />
+            </span>
+            {companyProfile.website.replace('https://', '')}
+          </a>
+        </div>
       </Motion.article>
     </section>
   )

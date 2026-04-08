@@ -25,7 +25,7 @@ const itemVariants = {
 
 export default function WhyChooseSection() {
   return (
-    <section className="cyber-noise border-y border-cyber-line/60 bg-cyber-panel/45 py-20" aria-labelledby="why-title">
+    <section className="cyber-noise theme-sheen-violet border-y border-cyber-line/60 bg-cyber-panel/45 py-20" aria-labelledby="why-title">
       <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
         <SectionHeading
           eyebrow="Why Cytroksys"
@@ -47,10 +47,10 @@ export default function WhyChooseSection() {
               variants={itemVariants}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="rounded-2xl border border-cyber-line bg-cyber-panel p-6"
+              className="glass-card premium-shimmer rounded-2xl border border-cyber-line bg-cyber-panel p-6"
             >
               <div
-                className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyber-ink"
+                className="surface-panel inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyber-ink"
                 style={{ color: value.accent }}
               >
                 <IconResolver name={value.icon} className="h-5 w-5" />

@@ -36,16 +36,16 @@ export default function HeroSection() {
   return (
     <section
       onMouseMove={onMove}
-      className="cyber-noise relative -mt-px overflow-hidden border-b border-cyber-line/70"
+      className="home-hero-stage hero-tone-sunset cyber-noise theme-sheen-aurora relative -mt-px overflow-hidden border-b border-cyber-line/70"
       aria-labelledby="hero-title"
     >
       <div className="hero-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="cyber-grid-overlay pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyber-cyan/70 to-transparent" aria-hidden="true" />
+      <div className="hero-accent-line pointer-events-none absolute inset-x-0 top-0 h-px" aria-hidden="true" />
 
       <Motion.div
         style={{ x: orbX, y: orbY }}
-        className="pointer-events-none absolute -left-24 top-20 h-64 w-64 rounded-full bg-cyber-cyan/20 blur-3xl"
+        className="hero-accent-orb pointer-events-none absolute -left-24 top-20 h-64 w-64 rounded-full blur-3xl"
         aria-hidden="true"
       />
       
@@ -55,7 +55,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex w-fit items-center gap-2 rounded-full border border-cyber-line bg-cyber-panel/75 px-4 py-1.5 font-display text-[11px] uppercase tracking-[0.2em] text-cyber-cyan/90"
+            className="hero-eyebrow-chip inline-flex w-fit items-center gap-2 rounded-full border border-cyber-line bg-cyber-panel/78 px-4 py-1.5 font-display text-[11px] uppercase tracking-[0.2em]"
           >
             <IconResolver name="Sparkles" className="h-3.5 w-3.5" />
             Full-Service IT Solutions Company
@@ -69,7 +69,7 @@ export default function HeroSection() {
             className="mt-5 max-w-2xl font-display text-4xl leading-[1.05] tracking-tight text-cyber-text sm:text-5xl md:text-6xl lg:text-[4.1rem]"
           >
             Engineering the
-            <span className="block bg-gradient-to-r from-cyber-cyan via-cyan-300 to-cyber-violet bg-clip-text text-transparent">
+            <span className="hero-title-gradient block bg-clip-text text-transparent">
               Digital Future
             </span>
           </Motion.h1>
@@ -92,7 +92,7 @@ export default function HeroSection() {
             <button
               type="button"
               onClick={scrollToServices}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-violet px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-cyber-ink shadow-glow transition hover:scale-105 hover:brightness-110 active:scale-95"
+              className="hero-cta brand-cta premium-shimmer inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-cyber-ink shadow-glow transition hover:scale-105 active:scale-95"
             >
               Explore Services
               <IconResolver name="ArrowRight" className="h-4 w-4" />
@@ -100,7 +100,7 @@ export default function HeroSection() {
             <button
               type="button"
               onClick={openVyana}
-              className="inline-flex items-center gap-2 rounded-full border border-cyber-line bg-cyber-panel/70 px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-cyber-text transition hover:border-cyber-cyan/70 hover:bg-cyber-panel"
+              className="hero-secondary-cta surface-panel inline-flex items-center gap-2 rounded-full border border-cyber-line bg-cyber-panel/72 px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-cyber-text transition"
             >
               Start with Vyana
               <IconResolver name="Bot" className="h-4 w-4" />
@@ -114,15 +114,15 @@ export default function HeroSection() {
             className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs uppercase tracking-[0.16em] text-cyber-muted"
           >
             <span className="inline-flex items-center gap-2">
-              <IconResolver name="BadgeCheck" className="h-4 w-4 text-cyber-cyan" />
+              <IconResolver name="BadgeCheck" className="hero-feature-icon h-4 w-4" />
               Dedicated Delivery Teams
             </span>
             <span className="inline-flex items-center gap-2">
-              <IconResolver name="Clock3" className="h-4 w-4 text-cyber-cyan" />
+              <IconResolver name="Clock3" className="hero-feature-icon h-4 w-4" />
               Fast Turnaround
             </span>
             <span className="inline-flex items-center gap-2">
-              <IconResolver name="ShieldCheck" className="h-4 w-4 text-cyber-cyan" />
+              <IconResolver name="ShieldCheck" className="hero-feature-icon h-4 w-4" />
               Security-First Build
             </span>
           </Motion.div>
@@ -133,7 +133,7 @@ export default function HeroSection() {
             transition={{ duration: 0.65, delay: 0.3 }}
             className="mt-9 grid grid-cols-2 gap-4 sm:grid-cols-3 md:max-w-2xl"
           >
-            <Stat label="Projects Delivered" value="50+" />
+            <Stat label="Projects Delivered" value="15+" />
             <Stat label="Cloud Platforms" value="3" />
             <Stat label="Security Audit" value="100%" />
           </Motion.div>
@@ -150,7 +150,7 @@ export default function HeroSection() {
 
 function Stat({ label, value }) {
   return (
-    <div className="rounded-2xl border border-cyber-line bg-cyber-panel/75 p-4 backdrop-blur">
+    <div className="surface-panel rounded-2xl border border-cyber-line bg-cyber-panel/78 p-4 backdrop-blur">
       <p className="font-display text-2xl text-cyber-text">{value}</p>
       <p className="mt-1 text-xs uppercase tracking-[0.16em] text-cyber-muted">{label}</p>
     </div>

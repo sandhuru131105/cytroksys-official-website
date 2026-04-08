@@ -12,8 +12,9 @@ export const companyProfile = {
 }
 
 export const founder = {
-  name: 'Suryaprakash',
+  name: 'SURYAPRAKASH PICHAIYA',
   role: 'Founder & CEO',
+  photo: '/photo.jpeg',
   bio: 'Suryaprakash leads Cytroksys with a security-first mindset and a product engineering background focused on cloud-native delivery, performance, and long-term maintainability.',
 }
 
@@ -159,32 +160,39 @@ export const caseStudies = [
 
 export const testimonials = [
   {
-    name: 'Diana Chen',
-    role: 'CTO, Orbitlane Systems',
+    name: 'Palanisami K',
+    role: 'SRK Auditor Firm',
     accent: '#00F0FF',
     quote:
       'Cytroksys brought startup speed with enterprise discipline. Their engineering and security rigor gave us confidence to scale globally.',
   },
   {
-    name: 'Sarah Jenkins',
-    role: 'Head of IT, Finware Labs',
+    name: 'Murukesan P',
+    role: 'SAI Steels PVT ltd',
     accent: '#2EE6A6',
     quote:
       'Their hybrid cloud strategy stabilized our infrastructure and improved visibility across environments within weeks.',
   },
   {
-    name: 'Marcus Keller',
-    role: 'Product Director, Nova Commercium',
+    name: 'Ashokkumar C',
+    role: 'Naruvizhi AMC',
     accent: '#FF4D9A',
     quote:
       'From audit to implementation, Cytroksys delivered clear execution, transparent communication, and measurable outcomes.',
   },
+  {
+    name: 'Pandi V',
+    role: 'Murugan Cable Vision',
+    accent: '#FFD166',
+    quote:
+      'The operator management application made our daily cable operations much easier and more organized.',
+  },
 ]
 
 export const contactDetails = {
-  email: 'hello@cytroksys.com',
-  phone: '+1 (800) 555-TECH',
-  location: 'Silicon Valley, CA / Remote',
+  email: 'cytroksys@gmail.com',
+  phone: '+91 9489868842',
+  location: 'Pudukkottai, India',
   whatsapp: '18005558324',
 }
 

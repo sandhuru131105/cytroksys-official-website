@@ -26,7 +26,7 @@ const itemVariants = {
 
 export default function TestimonialsSection() {
   return (
-    <section className="cyber-noise border-y border-cyber-line/60 bg-cyber-panel/40 py-20" aria-labelledby="testimonials-title">
+    <section className="cyber-noise theme-sheen-aurora border-y border-cyber-line/60 bg-cyber-panel/40 py-20" aria-labelledby="testimonials-title">
       <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
         <SectionHeading
           eyebrow="Voices of Success"
@@ -36,11 +36,11 @@ export default function TestimonialsSection() {
         />
 
         <Motion.div
-          className="mt-10 grid gap-5 md:grid-cols-3"
+          className="mt-10 flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
         >
           {testimonials.map((testimonial) => (
             <Motion.article
@@ -48,7 +48,7 @@ export default function TestimonialsSection() {
               variants={itemVariants}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="relative overflow-hidden rounded-3xl border border-cyber-line bg-cyber-panel p-6"
+              className="glass-card premium-shimmer relative min-w-[300px] max-w-[350px] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-cyber-line bg-cyber-panel p-6 md:min-w-[400px]"
             >
               <span
                 className="absolute bottom-0 left-0 top-0 w-1"
@@ -72,7 +72,7 @@ export default function TestimonialsSection() {
           ))}
         </Motion.div>
 
-        <div className="mt-12 rounded-3xl border border-cyber-cyan/40 bg-gradient-to-r from-cyber-panel to-cyber-panel-soft p-8 md:flex md:items-center md:justify-between">
+        <div className="surface-panel gradient-drift mt-12 rounded-3xl border border-cyber-cyan/40 p-8 md:flex md:items-center md:justify-between">
           <div>
             <p className="font-display text-2xl text-cyber-text">Ready to Scale with Confidence?</p>
             <p className="mt-2 max-w-xl text-sm text-cyber-muted">
@@ -81,7 +81,7 @@ export default function TestimonialsSection() {
           </div>
           <Link
             to="/contact"
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-violet px-6 py-3 text-sm font-semibold text-cyber-ink md:mt-0"
+            className="brand-cta premium-shimmer mt-5 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-cyber-ink md:mt-0"
           >
             Get Started
             <IconResolver name="ArrowRight" className="h-4 w-4" />

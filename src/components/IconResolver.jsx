@@ -6,6 +6,7 @@ import {
   CloudCog,
   CloudUpload,
   Code2,
+  ExternalLink,
   Fingerprint,
   Github,
   Headset,
@@ -22,6 +23,8 @@ import {
   Sparkles,
   Sun,
   X,
+  Send,
+  Clock3,
 } from 'lucide-react'
 
 const iconMap = {
@@ -31,6 +34,7 @@ const iconMap = {
   CloudCog,
   CloudUpload,
   Code2,
+  ExternalLink,
   Fingerprint,
   Github,
   Headset,
@@ -47,10 +51,11 @@ const iconMap = {
   Sparkles,
   Sun,
   X,
+  Send,
+  Clock3,
 }
 
 export function IconResolver({ name, ...props }) {
-  const IconComponent = iconMap[name] ?? Circle
+  const IconComponent = iconMap[name] || iconMap[name.charAt(0).toUpperCase() + name.slice(1)] || Circle
   return <IconComponent {...props} />
 }
-

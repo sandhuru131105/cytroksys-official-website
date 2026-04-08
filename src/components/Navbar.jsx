@@ -5,15 +5,15 @@ import { navItems } from '../data/company'
 import { IconResolver } from './IconResolver'
 
 const linkClass = ({ isActive }) =>
-  `relative text-sm font-medium transition ${
-    isActive ? 'text-cyber-cyan' : 'text-cyber-muted hover:text-cyber-text'
+  `relative text-sm font-semibold tracking-[0.01em] transition-colors duration-300 ${
+    isActive ? 'text-cyber-cyan' : 'text-cyber-muted hover:text-cyber-cyan'
   }`
 
 export default function Navbar({ theme, onToggleTheme }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-cyber-line/70 bg-cyber-ink/75 backdrop-blur-xl">
+    <header className="header-shell sticky top-0 z-40 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 md:px-6">
         <Link to="/" aria-label="Go to Cytroksys homepage" className="group inline-flex items-center gap-3">
           <div className="relative">
@@ -22,7 +22,7 @@ export default function Navbar({ theme, onToggleTheme }) {
               alt="Cytroksys Logo" 
               className="h-10 w-10 object-contain rounded-full shadow-glow"
             />
-            <span className="absolute -inset-1 -z-10 rounded-full bg-cyber-cyan/20 blur-md transition group-hover:bg-cyber-violet/30" />
+            <span className="absolute -inset-1 -z-10 rounded-full bg-cyber-cyan/25 blur-md transition group-hover:bg-cyber-violet/30" />
           </div>
           <div className="hidden sm:block">
             <p className="font-display text-sm uppercase tracking-[0.16em] text-cyber-text">Cytroksys</p>
@@ -42,14 +42,14 @@ export default function Navbar({ theme, onToggleTheme }) {
           <button
             type="button"
             onClick={onToggleTheme}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line bg-cyber-panel text-cyber-text transition hover:border-cyber-cyan"
+            className="surface-panel inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line/75 bg-cyber-panel text-cyber-text transition hover:border-cyber-cyan"
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             <IconResolver name={theme === 'dark' ? 'Sun' : 'Moon'} className="h-4 w-4" />
           </button>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-violet px-5 py-2.5 text-sm font-semibold text-cyber-ink transition hover:brightness-110"
+            className="brand-cta premium-shimmer inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-cyber-ink transition"
           >
             Get a Quote
             <IconResolver name="ArrowRight" className="h-4 w-4" />
@@ -62,7 +62,7 @@ export default function Navbar({ theme, onToggleTheme }) {
           aria-controls="mobile-nav"
           aria-label="Toggle navigation menu"
           onClick={() => setOpen((value) => !value)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line bg-cyber-panel text-cyber-text md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line/75 bg-cyber-panel text-cyber-text transition hover:border-cyber-cyan md:hidden"
         >
           <IconResolver name={open ? 'X' : 'Menu'} className="h-4 w-4" />
         </button>
@@ -76,7 +76,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.24, ease: 'easeOut' }}
-            className="overflow-hidden border-t border-cyber-line bg-cyber-panel/95 px-4 pb-4 pt-3 md:hidden"
+            className="overflow-hidden border-t border-cyber-line/70 bg-cyber-panel/95 px-4 pb-4 pt-3 md:hidden"
             aria-label="Mobile navigation"
           >
             <div className="flex flex-col gap-4">
@@ -94,7 +94,7 @@ export default function Navbar({ theme, onToggleTheme }) {
                 <button
                   type="button"
                   onClick={onToggleTheme}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line bg-cyber-ink text-cyber-text"
+                  className="surface-panel inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line/75 bg-cyber-ink text-cyber-text"
                   aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
                 >
                   <IconResolver name={theme === 'dark' ? 'Sun' : 'Moon'} className="h-4 w-4" />
@@ -102,7 +102,7 @@ export default function Navbar({ theme, onToggleTheme }) {
                 <Link
                   to="/contact"
                   onClick={() => setOpen(false)}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-violet px-5 py-2.5 text-sm font-semibold text-cyber-ink"
+                  className="brand-cta premium-shimmer inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-cyber-ink"
                 >
                   Get a Quote
                   <IconResolver name="ArrowRight" className="h-4 w-4" />

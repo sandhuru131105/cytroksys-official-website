@@ -18,7 +18,7 @@ export default function SectionHeading({ eyebrow, title, description, align = 'l
         {title}
       </h2>
       {description ? (
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cyber-muted md:text-base">
+        <p className={`mt-4 max-w-2xl text-sm leading-relaxed text-cyber-muted md:text-base ${align === 'center' ? 'mx-auto' : ''}`}>
           {description}
         </p>
       ) : null}
