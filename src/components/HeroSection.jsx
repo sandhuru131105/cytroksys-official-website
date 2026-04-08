@@ -69,7 +69,7 @@ export default function HeroSection() {
             className="mt-5 max-w-2xl font-display text-4xl leading-[1.05] tracking-tight text-cyber-text sm:text-5xl md:text-6xl lg:text-[4.1rem]"
           >
             Engineering the
-            <span className="hero-title-gradient block bg-clip-text text-transparent">
+            <span className="hero-title-gradient block">
               Digital Future
             </span>
           </Motion.h1>

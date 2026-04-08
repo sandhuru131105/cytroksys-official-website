@@ -3,6 +3,7 @@ import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { IconResolver } from './IconResolver'
 
 const VYANA_LOGO = '/vyana-logo.png'
+const AUTO_OPEN_DELAY_MS = 2 * 60 * 1000
 
 const useFallbackLogo = (event) => {
   event.currentTarget.onerror = null
@@ -110,11 +111,80 @@ async function buildServerReply(input, conversation) {
   return payload?.reply || null
 }
 
+function playOpenChime() {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext
+  if (!AudioContextClass) {
+    return
+  }
+
+  let audioContext
+
+  try {
+    audioContext = new AudioContextClass()
+  } catch (error) {
+    return
+  }
+
+  const playTone = () => {
+    const now = audioContext.currentTime
+    const gain = audioContext.createGain()
+    const oscillator = audioContext.createOscillator()
+
+    oscillator.type = 'sine'
+    oscillator.frequency.setValueAtTime(784, now)
+    oscillator.frequency.exponentialRampToValueAtTime(1046, now + 0.12)
+
+    gain.gain.setValueAtTime(0.0001, now)
+    gain.gain.exponentialRampToValueAtTime(0.028, now + 0.04)
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22)
+
+    oscillator.connect(gain)
+    gain.connect(audioContext.destination)
+
+    oscillator.start(now)
+    oscillator.stop(now + 0.24)
+    oscillator.onended = () => {
+      audioContext.close().catch(() => {})
+    }
+  }
+
+  if (audioContext.state === 'suspended') {
+    audioContext.resume().then(playTone).catch(() => {
+      audioContext.close().catch(() => {})
+    })
+    return
+  }
+
+  playTone()
+}
+
 export default function VyanaAssistant() {
   const [open, setOpen] = useState(false)
   const [typing, setTyping] = useState(false)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState(seedMessages)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setOpen(true)
+    }, AUTO_OPEN_DELAY_MS)
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!open) {
+      return
+    }
+
+    playOpenChime()
+  }, [open])
 
   useEffect(() => {
     const openFromAnywhere = () => {
@@ -185,107 +255,131 @@ export default function VyanaAssistant() {
   }
 
   return (
-    <AnimatePresence>
-      {open ? (
-        <div className="fixed inset-0 z-50 pointer-events-none">
-          <Motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-cyber-ink/30 pointer-events-auto"
-            onClick={() => setOpen(false)}
-            aria-hidden="true"
-          />
+    <>
+      <AnimatePresence>
+        {open ? (
+          <div className="fixed inset-0 z-50 pointer-events-none">
+            <Motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-cyber-ink/30 pointer-events-auto"
+              onClick={() => setOpen(false)}
+              aria-hidden="true"
+            />
 
-          <Motion.section
-            initial={{ opacity: 0, y: -12, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="pointer-events-auto absolute right-4 top-20 w-[min(94vw,420px)] overflow-hidden rounded-2xl border border-cyber-line bg-cyber-panel/95 shadow-2xl backdrop-blur md:right-6"
-            aria-label="Vyana Cytroksys assistant"
-          >
-            <div className="flex items-center justify-between border-b border-cyber-line/70 px-4 py-3">
-              <div className="flex items-center gap-2.5">
-                <img
-                  src={VYANA_LOGO}
-                  alt="Vyana logo"
-                  onError={useFallbackLogo}
-                  className="h-8 w-8 rounded-full border border-cyber-line/80 object-cover shadow-glow"
-                />
-                <div>
-                  <p className="font-display text-sm tracking-wide text-cyber-text">Vyana</p>
+            <Motion.section
+              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="pointer-events-auto absolute bottom-24 right-4 w-[min(94vw,440px)] overflow-hidden rounded-3xl border border-cyber-line bg-cyber-panel/95 shadow-2xl backdrop-blur md:bottom-28 md:right-6"
+              aria-label="Vyana Cytroksys assistant"
+            >
+              <div className="flex items-center justify-between border-b border-cyber-line/70 bg-gradient-to-r from-cyber-cyan/10 via-cyber-panel to-cyber-violet/10 px-4 py-3">
+                <div className="flex items-center gap-2.5">
+                  <img
+                    src={VYANA_LOGO}
+                    alt="Vyana logo"
+                    onError={useFallbackLogo}
+                    className="h-9 w-9 rounded-full border border-cyber-line/80 object-cover"
+                  />
+                  <div>
+                    <p className="font-display text-sm tracking-wide text-cyber-text">Vyana Assistant</p>
+                    <p className="text-[11px] tracking-wide text-cyber-muted">Support Online</p>
+                  </div>
                 </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-cyber-line bg-cyber-ink/70 text-cyber-text transition hover:border-cyber-cyan"
-                aria-label="Close assistant"
-              >
-                <IconResolver name="X" className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="max-h-80 space-y-3 overflow-y-auto px-4 py-3">
-              <div className="flex flex-wrap gap-2">
-                {quickPrompts.map((prompt) => (
-                  <button
-                    key={prompt}
-                    type="button"
-                    onClick={() => sendQuickPrompt(prompt)}
-                    className="surface-panel rounded-full border border-cyber-line bg-cyber-ink/60 px-2.5 py-1 text-[11px] tracking-wide text-cyber-muted transition hover:border-cyber-cyan/60 hover:text-cyber-text"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-
-              {messages.map((message, index) => (
-                <Motion.div
-                  key={`${message.from}-${index}`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`max-w-[96%] whitespace-pre-line rounded-xl px-3 py-2 text-sm leading-relaxed ${
-                    message.from === 'assistant'
-                      ? 'mr-auto border border-cyber-line bg-cyber-ink/70 text-cyber-muted'
-                      : 'brand-cta ml-auto text-cyber-ink'
-                  }`}
-                >
-                  {message.text}
-                </Motion.div>
-              ))}
-
-              {typing ? (
-                <div className="mr-auto inline-flex items-center gap-1 rounded-xl border border-cyber-line bg-cyber-ink/70 px-3 py-2">
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyber-cyan" />
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyber-cyan [animation-delay:120ms]" />
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyber-cyan [animation-delay:240ms]" />
-                </div>
-              ) : null}
-            </div>
-
-            <form onSubmit={handleSend} className="border-t border-cyber-line/70 p-3">
-              <div className="flex items-center gap-2">
-                <input
-                  value={input}
-                  onChange={(event) => setInput(event.target.value)}
-                  className="input-control h-10 px-3 py-2 text-sm"
-                  placeholder="Ask support question..."
-                  aria-label="Message Vyana"
-                />
                 <button
-                  type="submit"
-                  className="brand-cta premium-shimmer inline-flex h-10 w-10 items-center justify-center rounded-xl text-cyber-ink transition"
-                  aria-label="Send message"
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-cyber-line bg-cyber-ink/70 text-cyber-text transition hover:border-cyber-cyan"
+                  aria-label="Close assistant"
                 >
-                  <IconResolver name="Send" className="h-4 w-4" />
+                  <IconResolver name="X" className="h-4 w-4" />
                 </button>
               </div>
-            </form>
-          </Motion.section>
-        </div>
-      ) : null}
-    </AnimatePresence>
+
+              <div className="space-y-3 px-4 py-3">
+                <div className="flex flex-wrap gap-2">
+                  {quickPrompts.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      onClick={() => sendQuickPrompt(prompt)}
+                      className="surface-panel rounded-full border border-cyber-line bg-cyber-ink/60 px-3 py-1.5 text-[11px] tracking-wide text-cyber-muted transition hover:border-cyber-cyan/60 hover:text-cyber-text"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="max-h-[22rem] space-y-3 overflow-y-auto rounded-2xl border border-cyber-line/70 bg-cyber-ink/20 p-3">
+                  {messages.map((message, index) => (
+                    <Motion.div
+                      key={`${message.from}-${index}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`max-w-[95%] whitespace-pre-line rounded-2xl px-3 py-2.5 text-sm leading-relaxed ${
+                        message.from === 'assistant'
+                          ? 'mr-auto border border-cyber-line bg-cyber-panel text-cyber-muted'
+                          : 'ml-auto bg-gradient-to-r from-cyber-cyan to-cyber-violet text-[#04101f]'
+                      }`}
+                    >
+                      {message.text}
+                    </Motion.div>
+                  ))}
+
+                  {typing ? (
+                    <div className="mr-auto inline-flex items-center gap-1 rounded-xl border border-cyber-line bg-cyber-panel px-3 py-2">
+                      <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyber-cyan" />
+                      <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyber-cyan [animation-delay:120ms]" />
+                      <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyber-cyan [animation-delay:240ms]" />
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              <form onSubmit={handleSend} className="border-t border-cyber-line/70 p-3">
+                <div className="flex items-center gap-2 rounded-2xl border border-cyber-line bg-cyber-ink/55 p-2">
+                  <input
+                    value={input}
+                    onChange={(event) => setInput(event.target.value)}
+                    className="input-control h-11 border-0 bg-transparent px-3 py-2 text-sm shadow-none"
+                    placeholder="Ask your support question..."
+                    aria-label="Message Vyana"
+                  />
+                  <button
+                    type="submit"
+                    disabled={typing || !input.trim()}
+                    className="inline-flex h-11 min-w-[96px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyber-cyan to-cyber-violet px-4 text-sm font-semibold text-[#031018] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+                    aria-label="Send message"
+                  >
+                    {typing ? 'Sending' : 'Send'}
+                    <IconResolver name="Send" className="h-4 w-4" />
+                  </button>
+                </div>
+              </form>
+            </Motion.section>
+          </div>
+        ) : null}
+      </AnimatePresence>
+
+      <Motion.button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        initial={{ opacity: 0, scale: 0.85, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.22, ease: 'easeOut' }}
+        className="fixed bottom-6 right-4 z-[56] h-14 w-14 overflow-hidden rounded-full border border-cyber-line bg-cyber-panel/95 p-0.5 shadow-[0_14px_35px_rgba(15,23,42,0.28)] backdrop-blur transition hover:scale-105 hover:border-cyber-cyan md:bottom-8 md:right-6"
+        aria-label={open ? 'Close Vyana assistant' : 'Open Vyana assistant'}
+      >
+        <img
+          src={VYANA_LOGO}
+          alt="Vyana"
+          onError={useFallbackLogo}
+          className="h-full w-full rounded-full object-cover"
+        />
+      </Motion.button>
+    </>
   )
 }

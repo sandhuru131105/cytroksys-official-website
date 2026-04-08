@@ -12,14 +12,6 @@ const linkClass = ({ isActive }) =>
 export default function Navbar({ theme, onToggleTheme }) {
   const [open, setOpen] = useState(false)
 
-  const openAssistant = () => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    window.dispatchEvent(new CustomEvent('open-vyana-chat'))
-  }
-
   return (
     <header className="header-shell sticky top-0 z-40 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 md:px-6">
@@ -28,9 +20,8 @@ export default function Navbar({ theme, onToggleTheme }) {
             <img 
               src="/logo.png" 
               alt="Cytroksys Logo" 
-              className="h-10 w-10 object-contain rounded-full shadow-glow"
+              className="site-logo-clean h-10 w-10 rounded-full object-contain"
             />
-            <span className="absolute -inset-1 -z-10 rounded-full bg-cyber-cyan/25 blur-md transition group-hover:bg-cyber-violet/30" />
           </div>
           <div className="hidden sm:block">
             <p className="font-display text-sm uppercase tracking-[0.16em] text-cyber-text">Cytroksys</p>
@@ -47,15 +38,6 @@ export default function Navbar({ theme, onToggleTheme }) {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <button
-            type="button"
-            onClick={openAssistant}
-            className="surface-panel inline-flex items-center gap-2 rounded-xl border border-cyber-line/75 bg-cyber-panel px-3 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-cyber-text transition hover:border-cyber-cyan"
-            aria-label="Open Vyana Cytroksys Assistant"
-          >
-            <IconResolver name="Bot" className="h-4 w-4 text-cyber-cyan" />
-            Vyana
-          </button>
           <button
             type="button"
             onClick={onToggleTheme}
@@ -108,17 +90,6 @@ export default function Navbar({ theme, onToggleTheme }) {
                 </NavLink>
               ))}
               <div className="mt-2 flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    openAssistant()
-                    setOpen(false)
-                  }}
-                  className="surface-panel inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyber-line/75 bg-cyber-ink text-cyber-text"
-                  aria-label="Open Vyana Cytroksys Assistant"
-                >
-                  <IconResolver name="Bot" className="h-4 w-4 text-cyber-cyan" />
-                </button>
                 <button
                   type="button"
                   onClick={onToggleTheme}

@@ -52,20 +52,39 @@ export default function HeroVisual() {
           className="absolute h-96 w-96 rounded-full bg-cyber-violet/30 blur-[120px] [transform:translateZ(-150px)]"
         />
 
+        <Motion.div
+          animate={
+            prefersReducedMotion
+              ? { opacity: 0.34, scale: 1 }
+              : { opacity: [0.26, 0.48, 0.26], scale: [0.96, 1.08, 0.96] }
+          }
+          transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
+          className="hero-logo-aura absolute z-10 h-72 w-72 rounded-full md:h-[22rem] md:w-[22rem]"
+        />
+        <Motion.div
+          animate={
+            prefersReducedMotion
+              ? { opacity: 0.22, scale: 1 }
+              : { opacity: [0.18, 0.34, 0.18], scale: [1.04, 1.14, 1.04] }
+          }
+          transition={{ duration: 7.4, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+          className="hero-logo-aura hero-logo-aura-secondary absolute z-10 h-80 w-80 rounded-full md:h-[25rem] md:w-[25rem]"
+        />
+
         {/* Central Company Logo with 3D shadow */}
         <Motion.div
           initial={{ scale: 0, opacity: 0, translateZ: 0 }}
           animate={{ scale: 1, opacity: 1, translateZ: 50 }}
           transition={{ duration: 1.2, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
-          className="absolute z-20 flex h-64 w-64 items-center justify-center rounded-full border border-cyber-cyan/30 bg-cyber-ink/10 p-6 backdrop-blur-md shadow-[0_32px_64px_rgba(0,0,0,0.5)] md:h-80 md:w-80"
+          className="hero-logo-core absolute z-20 flex h-64 w-64 items-center justify-center rounded-full border border-cyber-cyan/30 p-6 backdrop-blur-md md:h-80 md:w-80"
           style={{ transformStyle: 'preserve-3d' }}
         >
           <img 
             src="/logo.png" 
             alt="Cytroksys" 
-            className="h-full w-full rounded-full object-contain drop-shadow-[0_0_30px_rgba(0,240,255,0.4)]"
+            className="hero-logo-image h-full w-full rounded-full object-contain"
             style={{ 
-              animation: prefersReducedMotion ? 'none' : 'float 6s ease-in-out infinite',
+              animation: prefersReducedMotion ? 'none' : undefined,
               transform: 'translateZ(30px)'
             }}
           />

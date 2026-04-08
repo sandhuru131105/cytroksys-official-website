@@ -190,7 +190,7 @@ export const testimonials = [
 ]
 
 export const contactDetails = {
-  email: 'cytroksys@gmail.com',
+  email: 'contact@cytroksys.in',
   phone: '+91 9489868842',
   location: 'Pudukkottai, India',
   whatsapp: '18005558324',
@@ -198,6 +198,7 @@ export const contactDetails = {
 
 export const socialLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com', icon: 'Linkedin' },
-  { label: 'X', href: 'https://x.com', icon: 'X' },
-  { label: 'GitHub', href: 'https://github.com', icon: 'Github' },
+  { label: 'X', href: 'https://x.com/cytroksys', icon: 'X' },
+  { label: 'GitHub', href: 'https://github.com/cytroksys', icon: 'Github' },
+  { label: 'Instagram', href: 'https://www.instagram.com/cytroksys', icon: 'Instagram' },
 ]

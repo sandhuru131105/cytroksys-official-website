@@ -20,12 +20,12 @@ export default function TrustSection() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center font-display text-[10px] uppercase tracking-[0.3em] text-cyber-muted/70"
+          className="text-center font-display text-[10px] uppercase tracking-[0.3em] text-cyber-muted/90"
         >
           Powering Digital Transformation with Industry Leaders
         </Motion.p>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 group">
+        <div className="mt-8 flex flex-wrap justify-center gap-8 md:gap-16 opacity-85 group">
           {techStack.map((tech, i) => (
             <Motion.div
               key={tech.name}

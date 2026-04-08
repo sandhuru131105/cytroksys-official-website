@@ -58,7 +58,7 @@ export default function ServicesSection() {
               key={service.key}
               variants={itemVariants}
               whileHover={{ y: -4, scale: 1.01 }}
-              className="group glass-card premium-shimmer relative flex flex-col overflow-hidden rounded-3xl border border-cyber-line/50 p-6 md:p-8 transition-all duration-500 hover:border-cyber-cyan/60 hover:shadow-[0_0_30px_rgba(0,240,255,0.12)]"
+              className="service-card group glass-card premium-shimmer relative flex flex-col overflow-hidden rounded-3xl border border-cyber-line/50 p-6 md:p-8 transition-all duration-500 hover:border-cyber-cyan/60 hover:shadow-[0_0_30px_rgba(0,240,255,0.12)]"
               style={{ '--service-accent': service.accent }}
             >
               <div
@@ -74,10 +74,10 @@ export default function ServicesSection() {
                   <IconResolver name={service.icon} className="h-5 w-5" />
                 </div>
                 
-                <h3 className="font-display text-[1.15rem] font-bold text-cyber-text tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-cyber-cyan transition-all duration-300">
+                <h3 className="service-card-title font-display text-[1.15rem] font-bold text-cyber-text tracking-tight">
                   {service.title}
                 </h3>
-                <p className="mt-3 text-[14px] leading-relaxed text-cyber-muted/80 flex-grow">
+                <p className="mt-3 text-[14px] leading-relaxed text-cyber-muted/95 flex-grow">
                   {service.summary}
                 </p>
                 
@@ -86,7 +86,7 @@ export default function ServicesSection() {
                     {service.bullets.map((item) => (
                       <li 
                         key={item} 
-                        className="flex items-start gap-2.5 text-[12px] font-medium tracking-wide text-cyber-muted/70 transition-colors group-hover:text-cyber-text/90"
+                        className="flex items-start gap-2.5 text-[12px] font-medium tracking-wide text-cyber-muted/90 transition-colors group-hover:text-cyber-text"
                       >
                         <IconResolver name="BadgeCheck" className="h-4 w-4 shrink-0 transition-opacity duration-300 opacity-60 group-hover:opacity-100" style={{ color: service.accent }} />
                         <span className="mt-[1px]">{item}</span>
