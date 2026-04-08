@@ -8,6 +8,11 @@ COPY . .
 EXPOSE 5173
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
 
+FROM deps AS api
+COPY . .
+EXPOSE 8787
+CMD ["npm", "run", "api:start"]
+
 FROM deps AS build
 COPY . .
 ARG VITE_EMAILJS_SERVICE_ID=

@@ -4,7 +4,7 @@ const STORAGE_KEY = 'cytroksys-theme'
 
 const getInitialTheme = () => {
   if (typeof window === 'undefined') {
-    return 'dark'
+    return 'light'
   }
 
   const stored = window.localStorage.getItem(STORAGE_KEY)
@@ -12,7 +12,7 @@ const getInitialTheme = () => {
     return stored
   }
 
-  return 'dark'
+  return 'light'
 }
 
 export function useTheme() {
