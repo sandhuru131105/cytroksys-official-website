@@ -27,3 +27,13 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Build/cache artifacts
+.next/
+tsconfig.tsbuildinfo
+
+# Local agent/debug artifacts
+.playwright-mcp/
+.qwen/
+admin-layout-check.png
+admin-layout-fixed.png
