@@ -11,6 +11,13 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!auth || !db) {
+      setUser(null)
+      setAdminProfile(null)
+      setLoading(false)
+      return undefined
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser)
 
@@ -37,6 +44,10 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = useCallback(async (email, password) => {
+    if (!auth || !db) {
+      throw new Error('Authentication is not configured for this environment.')
+    }
+
     const credential = await signInWithEmailAndPassword(auth, email, password)
     const adminDoc = await getDoc(doc(db, 'admins', credential.user.uid))
 
@@ -49,7 +60,9 @@ export function AuthProvider({ children }) {
   }, [])
 
   const logout = useCallback(async () => {
-    await signOut(auth)
+    if (auth) {
+      await signOut(auth)
+    }
     setAdminProfile(null)
   }, [])
 
