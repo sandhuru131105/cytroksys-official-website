@@ -41,22 +41,33 @@ export default function WhyChooseSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {valueProps.map((value) => (
+          {valueProps.map((value, index) => (
             <Motion.article
               key={value.title}
               variants={itemVariants}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="glass-card premium-shimmer rounded-2xl border border-cyber-line bg-cyber-panel p-6"
+              className="why-card glass-card premium-shimmer rounded-[1.75rem] border border-cyber-line bg-cyber-panel p-6"
+              style={{ '--value-accent': value.accent }}
             >
-              <div
-                className="surface-panel inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyber-ink"
-                style={{ color: value.accent }}
-              >
-                <IconResolver name={value.icon} className="h-5 w-5" />
+              <div className="flex items-start justify-between gap-4">
+                <div
+                  className="surface-panel inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-cyber-ink"
+                  style={{ color: value.accent }}
+                >
+                  <IconResolver name={value.icon} className="h-5 w-5" />
+                </div>
+                <span className="why-card-index text-[11px] font-semibold uppercase tracking-[0.2em]">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
               </div>
               <h3 className="mt-5 font-display text-lg text-cyber-text">{value.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-cyber-muted/95">{value.description}</p>
+              <div className="mt-6 border-t border-cyber-line/20 pt-4">
+                <span className="why-card-label text-[11px] font-semibold uppercase tracking-[0.18em]">
+                  Built into every engagement
+                </span>
+              </div>
             </Motion.article>
           ))}
         </Motion.div>

@@ -30,7 +30,7 @@ export const services = [
     key: 'web-app',
     title: 'Website & App Development',
     icon: 'Code2',
-    accent: '#00F0FF',
+    accent: '#2563EB',
     summary:
       'Custom web platforms, mobile apps, and conversion-focused UI/UX that turn product ideas into reliable digital experiences.',
     bullets: ['React and Node architecture', 'Mobile-first product flows', 'Scalable API integrations'],
@@ -39,7 +39,7 @@ export const services = [
     key: 'ai-agent',
     title: 'AI Agent Management',
     icon: 'Bot',
-    accent: '#7B2FFF',
+    accent: '#4F46E5',
     summary:
       'Build, deploy, and manage AI-powered agents that automate repetitive workflows while preserving governance and quality.',
     bullets: ['LLM workflow design', 'Agent observability', 'Automation playbooks'],
@@ -48,7 +48,7 @@ export const services = [
     key: 'firewall',
     title: 'Firewall Management',
     icon: 'ShieldCheck',
-    accent: '#FF8A3D',
+    accent: '#EA580C',
     summary:
       'Battle-tested firewall administration for threat prevention, policy hardening, and continuous network rule optimization.',
     bullets: ['Rule lifecycle governance', 'Threat intel updates', 'Incident response support'],
@@ -57,7 +57,7 @@ export const services = [
     key: 'cloud-mgmt',
     title: 'Cloud Management',
     icon: 'CloudCog',
-    accent: '#2EE6A6',
+    accent: '#0F766E',
     summary:
       '24/7 cloud operations across GCP, Azure, and AWS with cost governance, uptime monitoring, and proactive tuning.',
     bullets: ['Cloud reliability engineering', 'FinOps controls', 'Infrastructure hardening'],
@@ -66,7 +66,7 @@ export const services = [
     key: 'migration',
     title: 'Cloud Migration',
     icon: 'CloudUpload',
-    accent: '#FFD166',
+    accent: '#D97706',
     summary:
       'Zero-downtime migration planning for on-prem systems, lift-and-shift workloads, and strategic re-architecting.',
     bullets: ['Readiness assessment', 'Phased migration rollout', 'Post-migration optimization'],
@@ -75,7 +75,7 @@ export const services = [
     key: 'hybrid',
     title: 'Hybrid Cloud Solutions',
     icon: 'Network',
-    accent: '#5A8CFF',
+    accent: '#0284C7',
     summary:
       'Unify on-prem and multi-cloud environments with secure connectivity, centralized observability, and policy control.',
     bullets: ['Multi-cloud architecture', 'Unified workload orchestration', 'Resilience planning'],
@@ -84,7 +84,7 @@ export const services = [
     key: 'security-audit',
     title: 'Security Audits',
     icon: 'Fingerprint',
-    accent: '#FF4D9A',
+    accent: '#7C3AED',
     summary:
       'Comprehensive security audits, penetration testing, and compliance-aligned remediation for zero-trust readiness.',
     bullets: ['Vulnerability assessment', 'Compliance checkpoints', 'Executive risk reporting'],
@@ -95,28 +95,28 @@ export const valueProps = [
   {
     title: 'Expertise That Ships',
     icon: 'BadgeCheck',
-    accent: '#00F0FF',
+    accent: '#2563EB',
     description:
       'Cross-functional teams that design, build, and operate digital products with measurable business outcomes.',
   },
   {
     title: 'Security-First DNA',
     icon: 'Shield',
-    accent: '#FF8A3D',
+    accent: '#EA580C',
     description:
       'Zero-trust architecture, hardened environments, and compliance-aware engineering at every delivery stage.',
   },
   {
     title: 'Built for Scalability',
     icon: 'Scaling',
-    accent: '#7B2FFF',
+    accent: '#0F766E',
     description:
       'Cloud-native foundations that stay fast and stable as traffic, data, and operational complexity grow.',
   },
   {
     title: '24/7 Operational Support',
     icon: 'Headset',
-    accent: '#2EE6A6',
+    accent: '#4F46E5',
     description:
       'Always-on monitoring and response so your platform remains available, resilient, and business-ready.',
   },
@@ -162,28 +162,28 @@ export const testimonials = [
   {
     name: 'Palanisami K',
     role: 'SRK Auditor Firm',
-    accent: '#00F0FF',
+    accent: '#2563EB',
     quote:
       'Cytroksys brought startup speed with enterprise discipline. Their engineering and security rigor gave us confidence to scale globally.',
   },
   {
     name: 'Murukesan P',
-    role: 'SAI Steels PVT ltd',
-    accent: '#2EE6A6',
+    role: 'SAI Steels Pvt. Ltd.',
+    accent: '#0F766E',
     quote:
       'Their hybrid cloud strategy stabilized our infrastructure and improved visibility across environments within weeks.',
   },
   {
     name: 'Ashokkumar C',
     role: 'Naruvizhi AMC',
-    accent: '#FF4D9A',
+    accent: '#EA580C',
     quote:
       'From audit to implementation, Cytroksys delivered clear execution, transparent communication, and measurable outcomes.',
   },
   {
     name: 'Pandi V',
     role: 'Murugan Cable Vision',
-    accent: '#FFD166',
+    accent: '#4F46E5',
     quote:
       'The operator management application made our daily cable operations much easier and more organized.',
   },

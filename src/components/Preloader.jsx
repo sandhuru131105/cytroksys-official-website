@@ -1,6 +1,6 @@
 import { motion as Motion } from 'framer-motion'
 
-export default function Preloader({ logoSrc = '/logo.png' }) {
+export default function Preloader({ logoSrc = '/logo-nav.png' }) {
   return (
     <Motion.div
       initial={{ opacity: 1 }}

@@ -13,7 +13,7 @@ const techStack = [
 export default function TrustSection() {
   return (
     <section className="relative overflow-hidden border-y border-cyber-line/50 bg-cyber-ink py-10">
-      <div className="absolute inset-0 z-0 bg-cyber-grid-overlay opacity-10" />
+      <div className="cyber-grid-overlay absolute inset-0 z-0 opacity-40" />
       
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <Motion.p 

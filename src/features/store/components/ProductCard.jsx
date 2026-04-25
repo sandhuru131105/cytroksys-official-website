@@ -13,7 +13,7 @@ export default function ProductCard({ product, onOrderNow }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.35 }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-sky-200 bg-white/95 shadow-[0_14px_34px_rgba(2,132,199,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_42px_rgba(14,165,233,0.22)]"
+      className="store-product-card group relative flex flex-col overflow-hidden rounded-2xl border border-sky-200 bg-white/95 shadow-[0_14px_34px_rgba(2,132,199,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_20px_42px_rgba(14,165,233,0.22)]"
     >
       {/* Featured badge */}
       {product.isFeatured && (
@@ -30,7 +30,7 @@ export default function ProductCard({ product, onOrderNow }) {
       )}
 
       {/* Product image */}
-      <div className="relative flex h-40 items-center justify-center bg-gradient-to-br from-sky-50 via-cyan-50 to-indigo-50 p-6">
+      <div className="store-product-media relative flex h-40 items-center justify-center bg-gradient-to-br from-sky-50 via-cyan-50 to-indigo-50 p-6">
         {product.imageUrl ? (
           <img
             src={product.imageUrl}

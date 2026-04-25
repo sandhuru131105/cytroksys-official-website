@@ -16,12 +16,17 @@ export default function AboutSection() {
           <p>
             We partner with founders and IT leaders to build digital systems that are secure by design and optimized for growth. Every engagement is outcome-driven and engineered for long-term maintainability.
           </p>
-          <p>
-            Mission: {companyProfile.mission}
-          </p>
-          <p>
-            Vision: {companyProfile.vision}
-          </p>
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="glass-card rounded-3xl border border-cyber-line/60 p-5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyber-cyan">Mission</p>
+            <p className="mt-3 text-sm leading-relaxed text-cyber-muted">{companyProfile.mission}</p>
+          </div>
+          <div className="glass-card rounded-3xl border border-cyber-line/60 p-5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyber-cyan">Vision</p>
+            <p className="mt-3 text-sm leading-relaxed text-cyber-muted">{companyProfile.vision}</p>
+          </div>
         </div>
       </div>
 
@@ -51,6 +56,7 @@ export default function AboutSection() {
           <div>
             <h3 className="font-display text-2xl font-bold tracking-tight text-cyber-text">{founder.name}</h3>
             <p className="text-sm font-semibold uppercase tracking-wider text-cyber-cyan/90">{founder.role}</p>
+            <p className="mt-2 text-xs uppercase tracking-[0.18em] text-cyber-muted">Founder-led Delivery</p>
           </div>
         </div>
         <p className="mt-6 text-base leading-relaxed text-cyber-muted/90">{founder.bio}</p>

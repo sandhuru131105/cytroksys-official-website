@@ -1,8 +1,16 @@
 import { motion as Motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import { companyProfile } from '../data/company'
 import { IconResolver } from './IconResolver'
+import AnimatedCounter from './AnimatedCounter'
 
 import HeroVisual from './HeroVisual'
+
+const heroStats = [
+  { icon: 'Code2', value: '25', suffix: '+', label: 'Projects', detail: 'Delivered' },
+  { icon: 'Clock3', value: companyProfile.founded, label: 'Founded', detail: 'Built in India', staticValue: true },
+  { icon: 'Network', value: '3', label: 'Global', detail: 'Delivery Offices' },
+  { icon: 'ShieldCheck', value: '100', suffix: '%', label: 'Client', detail: 'Satisfaction Focus' },
+]
 
 export default function HeroSection() {
   const prefersReducedMotion = useReducedMotion()
@@ -36,11 +44,9 @@ export default function HeroSection() {
   return (
     <section
       onMouseMove={onMove}
-      className="home-hero-stage hero-tone-sunset cyber-noise theme-sheen-aurora relative -mt-px overflow-hidden border-b border-cyber-line/70"
+      className="home-hero-stage hero-tone-sunset relative -mt-px overflow-hidden border-b border-cyber-line/55"
       aria-labelledby="hero-title"
     >
-      <div className="hero-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="cyber-grid-overlay pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="hero-accent-line pointer-events-none absolute inset-x-0 top-0 h-px" aria-hidden="true" />
 
       <Motion.div
@@ -55,10 +61,10 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="hero-eyebrow-chip inline-flex w-fit items-center gap-2 rounded-full border border-cyber-line bg-cyber-panel/78 px-4 py-1.5 font-display text-[11px] uppercase tracking-[0.2em]"
+            className="hero-eyebrow-chip inline-flex w-fit items-center gap-2 rounded-full px-4 py-1.5 font-display text-[11px] uppercase tracking-[0.2em]"
           >
-            <IconResolver name="Sparkles" className="h-3.5 w-3.5" />
-            Full-Service IT Solutions Company
+            <IconResolver name="Sparkles" className="h-3.5 w-3.5 text-cyber-cyan" />
+            Web, AI, Cloud & Cybersecurity
           </Motion.p>
 
           <Motion.h1
@@ -66,12 +72,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-5 max-w-2xl font-display text-4xl leading-[1.05] tracking-tight text-cyber-text sm:text-5xl md:text-6xl lg:text-[4.1rem]"
+            className="mt-5 max-w-2xl font-display text-4xl leading-[1.02] tracking-tight text-cyber-text sm:text-5xl md:text-6xl lg:text-[4.25rem]"
           >
-            Engineering the
-            <span className="hero-title-gradient block">
-              Digital Future
-            </span>
+            Build Secure
+            <span className="hero-title-gradient block">Digital Products</span>
+            Faster
           </Motion.h1>
 
           <Motion.p
@@ -80,7 +85,7 @@ export default function HeroSection() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-cyber-muted/95 md:text-lg"
           >
-            {companyProfile.name} helps ambitious teams launch AI products, harden cloud systems, and scale faster with senior engineering support.
+            {companyProfile.name} designs websites, AI workflows, cloud platforms, and security systems for teams that need speed without fragile infrastructure.
           </Motion.p>
 
           <Motion.div
@@ -115,7 +120,7 @@ export default function HeroSection() {
           >
             <span className="inline-flex items-center gap-2">
               <IconResolver name="BadgeCheck" className="hero-feature-icon h-4 w-4" />
-              Dedicated Delivery Teams
+              Fixed-Scope Builds
             </span>
             <span className="inline-flex items-center gap-2">
               <IconResolver name="Clock3" className="hero-feature-icon h-4 w-4" />
@@ -123,7 +128,7 @@ export default function HeroSection() {
             </span>
             <span className="inline-flex items-center gap-2">
               <IconResolver name="ShieldCheck" className="hero-feature-icon h-4 w-4" />
-              Security-First Build
+              Security-First Delivery
             </span>
           </Motion.div>
 
@@ -131,11 +136,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.3 }}
-            className="mt-9 grid grid-cols-2 gap-4 sm:grid-cols-3 md:max-w-2xl"
+            className="hero-stat-grid mt-9 grid grid-cols-2 gap-3 sm:gap-4 md:max-w-2xl"
           >
-            <Stat label="Projects Delivered" value="15+" />
-            <Stat label="Cloud Platforms" value="3" />
-            <Stat label="Security Audit" value="100%" />
+            {heroStats.map((stat) => (
+              <Stat key={`${stat.label}-${stat.detail}`} {...stat} />
+            ))}
           </Motion.div>
         </div>
 
@@ -148,12 +153,22 @@ export default function HeroSection() {
 }
 
 
-function Stat({ label, value }) {
+function Stat({ icon, label, detail, value, suffix = '', staticValue = false }) {
   return (
-    <div className="surface-panel rounded-2xl border border-cyber-line bg-cyber-panel/78 p-4 backdrop-blur">
-      <p className="font-display text-2xl text-cyber-text">{value}</p>
-      <p className="mt-1 text-xs uppercase tracking-[0.16em] text-cyber-muted">{label}</p>
+    <div className="stat-card hero-stat-card group relative overflow-hidden rounded-2xl border border-cyber-line/50 bg-cyber-panel p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-aurora">
+      <div className="hero-stat-glow absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100" aria-hidden="true" />
+      <div className="relative z-10 flex items-start gap-3">
+        <span className="hero-stat-icon inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+          <IconResolver name={icon} className="h-5 w-5" />
+        </span>
+        <span className="min-w-0">
+          <span className="block font-display text-[1.95rem] font-extrabold leading-none tracking-tight text-cyber-text">
+            {staticValue ? value : <AnimatedCounter end={value} suffix={suffix} duration={1100} />}
+          </span>
+          <span className="mt-2 block text-[12px] font-bold uppercase tracking-[0.12em] text-cyber-text/90">{label}</span>
+          <span className="mt-0.5 block text-[12px] font-medium text-cyber-muted">{detail}</span>
+        </span>
+      </div>
     </div>
   )
 }
-

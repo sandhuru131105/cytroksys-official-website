@@ -13,6 +13,8 @@ const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 const canUseEmailJs =
   Boolean(EMAILJS_SERVICE_ID) && Boolean(EMAILJS_TEMPLATE_ID) && Boolean(EMAILJS_PUBLIC_KEY)
 
+const contactHighlights = ['Reply within 1 business day', 'Security-first planning', 'Founder-led consultation']
+
 export default function ContactSection() {
   const [submitFeedback, setSubmitFeedback] = useState(null)
   const {
@@ -76,23 +78,33 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="theme-sheen-violet mx-auto w-full max-w-7xl px-4 py-20 md:px-6" aria-labelledby="contact-title">
-      <div className="grid gap-8 md:grid-cols-[1fr_1.15fr]">
-        <div>
+      <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="space-y-6">
           <SectionHeading
             eyebrow="Contact"
             title="Let Us Build Something Incredible"
             description="Tell us your goals and we will design a practical, security-first plan to move your roadmap forward."
           />
 
-          <div className="mt-8 space-y-4">
-            <Detail icon="Mail" label="Email" value={contactDetails.email} href={`mailto:${contactDetails.email}`} />
-            <Detail
-              icon="Phone"
-              label="Call"
-              value={contactDetails.phone}
-              href={`tel:${contactDetails.phone.replace(/\s+/g, '')}`}
-            />
-            <Detail icon="MapPin" label="Location" value={contactDetails.location} />
+          <div className="contact-intro-panel rounded-[2rem] border border-cyber-line/70 p-6 md:p-7">
+            <div className="flex flex-wrap gap-2">
+              {contactHighlights.map((item) => (
+                <span key={item} className="contact-highlight-pill rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-cyber-text">
+                  {item}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <Detail icon="Mail" label="Email" value={contactDetails.email} href={`mailto:${contactDetails.email}`} />
+              <Detail
+                icon="Phone"
+                label="Call"
+                value={contactDetails.phone}
+                href={`tel:${contactDetails.phone.replace(/\s+/g, '')}`}
+              />
+              <Detail icon="MapPin" label="Location" value={contactDetails.location} />
+            </div>
           </div>
         </div>
 
@@ -102,10 +114,20 @@ export default function ContactSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.45 }}
           onSubmit={handleSubmit(onSubmit)}
-          className="glass-card contact-form-card rounded-3xl border border-cyber-line bg-cyber-panel p-6 md:p-8"
+          className="glass-card contact-form-card rounded-[2rem] border border-cyber-line bg-cyber-panel p-6 md:p-8"
           noValidate
           aria-label="Contact Cytroksys"
         >
+          <div className="mb-6 flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyber-cyan">Project Brief</p>
+              <h3 className="mt-2 font-display text-2xl text-cyber-text">Tell us what you&apos;re building</h3>
+            </div>
+            <span className="contact-form-badge rounded-full px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyber-text">
+              Fast response
+            </span>
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField label="Name" error={errors.name?.message}>
               <input
@@ -193,8 +215,8 @@ export default function ContactSection() {
 
 function Detail({ icon, label, value, href }) {
   return (
-    <div className="glass-card flex items-start gap-3 rounded-xl border border-cyber-line bg-cyber-panel p-4">
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-cyber-ink text-cyber-cyan">
+    <div className="contact-detail-card flex items-start gap-3 rounded-2xl border border-cyber-line bg-cyber-panel p-4">
+      <span className="contact-detail-icon inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyber-ink text-cyber-cyan">
         <IconResolver name={icon} className="h-4 w-4" />
       </span>
       <span>

@@ -1,10 +1,13 @@
+import { lazy, Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useTheme } from '../hooks/useTheme'
 import Footer from './Footer'
 import Navbar from './Navbar'
 import ScrollProgressBar from './ScrollProgressBar'
 import ScrollToTop from './ScrollToTop'
-import VyanaAssistant from './VyanaAssistant'
+import AuroraBackground from './AuroraBackground'
+
+const VyanaAssistant = lazy(() => import('./VyanaAssistant'))
 
 export default function MainLayout() {
   const { theme, toggleTheme } = useTheme()
@@ -17,6 +20,7 @@ export default function MainLayout() {
       >
         Skip to content
       </a>
+      <AuroraBackground />
       <ScrollToTop />
       <ScrollProgressBar />
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
@@ -24,8 +28,9 @@ export default function MainLayout() {
         <Outlet />
       </main>
       <Footer />
-      <VyanaAssistant />
+      <Suspense fallback={null}>
+        <VyanaAssistant />
+      </Suspense>
     </div>
   )
 }
-
