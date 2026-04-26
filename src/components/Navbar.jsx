@@ -85,7 +85,7 @@ export default function Navbar({ theme, onToggleTheme }) {
           </button>
           <Link
             to="/contact"
-            className="brand-cta premium-shimmer inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-cyber-ink transition"
+            className="brand-cta premium-shimmer inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition"
           >
             Get a Quote
             <IconResolver name="ArrowRight" className="h-4 w-4" />
@@ -138,7 +138,7 @@ export default function Navbar({ theme, onToggleTheme }) {
                 <Link
                   to="/contact"
                   onClick={() => setOpen(false)}
-                  className="brand-cta premium-shimmer inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-cyber-ink"
+                  className="brand-cta premium-shimmer inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold"
                 >
                   Get a Quote
                   <IconResolver name="ArrowRight" className="h-4 w-4" />

@@ -97,7 +97,7 @@ export default function HeroSection() {
             <button
               type="button"
               onClick={scrollToServices}
-              className="hero-cta brand-cta premium-shimmer inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-cyber-ink shadow-glow transition hover:scale-105 active:scale-95"
+              className="hero-cta brand-cta premium-shimmer inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wide shadow-glow transition hover:scale-105 active:scale-95"
             >
               Explore Services
               <IconResolver name="ArrowRight" className="h-4 w-4" />

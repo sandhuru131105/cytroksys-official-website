@@ -34,12 +34,12 @@ export default function HeroVisual() {
       <Motion.div
         className="absolute h-72 w-72 rounded-full bg-cyber-cyan/15 blur-[80px]"
         animate={prefersReducedMotion ? undefined : { scale: [1, 1.08, 1], opacity: [0.35, 0.55, 0.35] }}
-        transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        transition={prefersReducedMotion ? undefined : { duration: 12, repeat: Infinity, ease: 'easeInOut' }}
       />
       <Motion.div
         className="absolute h-80 w-80 rounded-full bg-cyber-aurora/12 blur-[100px]"
         animate={prefersReducedMotion ? undefined : { scale: [1.06, 0.98, 1.06], opacity: [0.24, 0.4, 0.24] }}
-        transition={prefersReducedMotion ? undefined : { duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        transition={prefersReducedMotion ? undefined : { duration: 14, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       <div className="absolute inset-0 flex items-center justify-center">
@@ -50,7 +50,7 @@ export default function HeroVisual() {
       <Motion.div
         className="absolute inset-0"
         animate={prefersReducedMotion ? undefined : { rotate: 360 }}
-        transition={prefersReducedMotion ? undefined : { duration: 38, repeat: Infinity, ease: 'linear' }}
+        transition={prefersReducedMotion ? undefined : { duration: 54, repeat: Infinity, ease: 'linear' }}
       >
         {orbitItems.map((item, index) => {
           const angle = (item.angle * Math.PI) / 180
